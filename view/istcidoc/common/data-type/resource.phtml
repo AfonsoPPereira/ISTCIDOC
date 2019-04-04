@@ -1,0 +1,25 @@
+<?php
+use ISTCIDOC\Api\Representation\ISTCIDOCItemRepresentation;
+
+$escape = $this->plugin('escapeHtml');
+
+// Users can select media resources as values only when editing an item, and can
+// only assign media that's assigned ot the current item and ingested.
+$mediaContentUrlOptions = ['query' => []];
+if ($resource instanceof ISTCIDOCItemRepresentation) {
+    $mediaContentUrlOptions['query']['item_id'] = $resource->id();
+}
+?>
+<span class="default"><?php echo $this->translate('No resource selected'); ?></span>
+<p class="selected-resource">
+    <span class="o-title"></span>
+    <input type="hidden" class="value to-require" data-value-key="value_resource_id">
+</p>
+
+<?php
+if (in_array($dataType, ['resource_cidoc', 'resource:location'])):
+    echo $this->hyperlink('Localização', '#item-resource-select', [
+        'class' => 'o-icon-items button resource-select',
+        'data-sidebar-content-url' => $this->url('admin/ist-cidoc/sidebar-select', ['controller' => 'item', 'action' => 'sidebar-select'], false),
+    ]);
+endif;

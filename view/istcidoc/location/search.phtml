@@ -1,0 +1,13 @@
+<?php
+$this->htmlElement('body')->appendAttribute('class', 'locations search');
+?>
+<?php echo $this->pageTitle($this->translate('Advanced search'), 1, $this->translate('Locations')); ?>
+<form id="advanced-search" method="get" action="<?php echo $this->escapeHtml($this->url('admin/ist-cidoc/browse-location')); ?>">
+<?php echo $this->partial(
+    'istcidoc/common/advanced-search',
+    ['query' => $this->params()->fromQuery(), 'resourceType' => 'location']
+); ?>
+<div id="page-actions">
+    <input type="submit" name="submit" value="<?php echo $this->escapeHtml($this->translate('Search')); ?>">
+</div>
+</form>

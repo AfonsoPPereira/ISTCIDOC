@@ -1,0 +1,29 @@
+<?php
+/** @var \ISTCIDOC\Form\ISTCIDOCForm $form */
+$form->prepare();
+$escapeHtml = $this->plugin('escapeHtml');
+
+$istCIDOCFieldset = $form->get('ist_cidoc_fieldset');
+?>
+
+<?php echo $this->pageTitle($this->translate('Add IST Item')); ?>
+<?php echo $this->form()->openTag($form); ?>
+<fieldset id="page-actions">
+    <button type="submit" name="add-item-submit" value="submit"><?php echo $this->translate('Add'); ?></button>
+</fieldset>
+<?php echo $this->formCollection($istCIDOCFieldset, false); ?>
+
+<?php
+echo $this->partial('istcidoc/index/form.phtml', [
+    'form' => $form,
+    'item' => null,
+    'submitLabel' => $this->translate('Add'),
+    'sectionNavEvent' => 'view.add.section_nav',
+    'action' => 'add',
+]);
+?>
+
+
+
+
+

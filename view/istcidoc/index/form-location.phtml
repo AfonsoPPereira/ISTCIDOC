@@ -1,0 +1,18 @@
+<?php
+$this->headScript()->appendFile($this->assetUrl('js/location-item.js', 'ISTCIDOC'), 'text/javascript', array('id' => 'location_item'));
+$this->headScript()->appendFile($this->assetUrl('js/resource-form-location.js', 'ISTCIDOC'));
+
+$escape = $this->plugin('escapeHtml');
+$formLabel = $this->plugin('formLabel');
+$formElement = $this->plugin('formElement');
+?>
+<?php $this->trigger("view.$action.form.before", ['form' => $form]); ?>
+
+<?php echo $this->partial('istcidoc/common/resource-fields.phtml', [
+    'form' => $form,
+	'resource' => $item,
+]); ?>
+
+<?php $this->trigger("view.$action.form.after", ['form' => $form]); ?>
+
+<?php echo $this->partial('istcidoc/common/resource-form-templates.phtml'); ?>

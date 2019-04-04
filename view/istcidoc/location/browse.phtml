@@ -1,0 +1,67 @@
+<?php
+$this->headLink()->appendStylesheet($this->assetUrl('css/ist-cidoc-location.css', 'ISTCIDOC'));
+$escape = $this->plugin('escapeHtml');
+?>
+
+<?php echo $this->pageTitle($this->translate('Browse Locations')); ?>
+
+<div id="page-actions">
+    <?php if ($this->userIsAllowed('ISTCIDOC\Api\Adapter\LocationAdapter', 'create')): ?>
+    <?php echo $this->hyperlink($this->translate('Add new location'), $this->url('admin/ist-cidoc/add-location'), ['class' => 'button']); ?>
+    <?php endif; ?>
+</div>
+
+<?php if (!$locations): ?>
+<p><?php echo $this->translate('There are no locations available'); ?></p>
+<?php else: ?>
+<table>
+    <thead>
+        <tr>
+            <th><?php echo $this->translate('Location URI'); ?></th>
+            <th><?php echo $this->translate('Location Title'); ?></th>
+            <th><?php echo $this->translate('Location Position'); ?></th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($locations as $location): ?>
+        <tr>
+            <td>
+                <ul class="actions">
+                    <?php if ($location->userIsAllowed('update')): ?>
+                    <li><?php echo $location->link('', 'edit', [
+                        'class' => 'o-icon-edit',
+                        'aria-label' => $this->translate('Edit'),
+                        'title' => $this->translate('Edit'),
+                    ]); ?></li>
+                    <?php endif; ?>
+                    <?php if ($location->userIsAllowed('delete')): ?>
+                    <li><a href="#"
+                        data-sidebar-content-url="<?php echo $escape($location->url('delete-confirm')); ?>"
+                        class="o-icon-delete sidebar-content"
+                        aria-label="<?php echo $escape($this->translate('Delete')); ?>"
+                        title="<?php echo $escape($this->translate('Delete')); ?>"></a></li>
+                    <?php endif; ?>
+                </ul>
+                <?php echo $this->hyperlink(
+                    $escape($location->uri()),
+                    $this->url('admin/ist-cidoc/id', [
+                        'controller' => 'location',
+                        'action' => 'show',
+                        'id' => $location->id()]
+                    )
+                ); ?></td>
+            <td><?php echo $escape($location->local()); ?></td>
+            <td><?php echo $escape($location->position()); ?></td>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>
+<?php endif; ?>
+
+<div class="sidebar">
+    <a href="#"
+        class="sidebar-close o-icon-close"
+        aria-label="<?php echo $escape($this->translate('Close')); ?>"
+        title="<?php echo $escape($this->translate('Close')); ?>"></a>
+    <div class="sidebar-content"></div>
+</div>

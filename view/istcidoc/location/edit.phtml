@@ -1,0 +1,9 @@
+<?php $form->prepare(); ?>
+<?php echo $this->pageTitle(sprintf($this->translate('Edit Location: “%s”'), $vocab->local())); ?>
+<?php echo $this->form()->openTag($form); ?>
+<div id="page-actions">
+    <button><?php echo $this->escapeHtml($this->translate('Submit')); ?></button>
+</div>
+<?php echo $this->formCollection($form, false); ?>
+<?php echo $this->form()->closeTag(); ?>
+<p><img id="img" src="https://fenix.tecnico.ulisboa.pt/api/fenix/v1/spaces/<?php echo $vocab->uri(); ?>/blueprint?format=jpeg" alt="<?php $vocab->local(); ?>" height="450" width="600"></p>

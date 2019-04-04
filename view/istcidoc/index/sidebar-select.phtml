@@ -1,0 +1,57 @@
+<?php
+$escape = $this->plugin('escapeHtml');
+$hyperlink = $this->plugin('hyperlink');
+$itemsFound = count($items) > 0;
+?>
+
+<div id="item-results">
+    <h3><?php echo $this->translate('Select Location'); ?></h3>
+    
+    <div class="search-nav">
+        <div id="sidebar-resource-search" class="resource-search" data-search-url="<?php echo $escape($this->url(null, [], [], true)); ?>">
+            <input type="text" name="search" id="resource-list-search" value="<?php echo $escape($search); ?>">
+            <button type="button" class="o-icon-search"><?php echo $this->translate('Search'); ?></button>
+        </div>
+        <?php if ($itemsFound): ?>
+        <?php echo $this->pagination('common/sidebar-pagination.phtml'); ?>
+        <?php endif; ?>
+    </div>
+
+    <?php if ($itemsFound): ?>
+    
+    <div class="resource-list">
+        <?php foreach ($items as $item):?>
+        <div class="resource item" data-resource-values="<?php echo $escape(json_encode($item->valueRepresentation())); ?>">
+            <div class="select-resource-checkbox-wrapper">
+              <input type="checkbox" class="select-resource-checkbox" name="resource_ids[]" value="<?php echo $item->id(); ?>">
+            </div>
+            <?php
+            $content = sprintf(
+                '%s<span class="resource-name">%s</span>',
+                $this->thumbnail($item, 'square'),
+                $escape($item->local())
+            );
+            if ($showDetails):
+                $attrs = [
+                    'class' => 'sidebar-content select-resource resource-link',
+                    'data-sidebar-content-url' => $item->url('show-details'),
+                    'data-sidebar-selector' => '#resource-details',
+                ];
+            else:
+                $attrs = [
+                    'class' => 'select-resource resource-link',
+                ];
+            endif;
+            echo $hyperlink->raw($content, '#', $attrs);
+            ?>
+        </div>
+        <?php endforeach; ?>
+    </div>
+    <?php else: ?>
+    <span class="no-resources"><?php echo $this->translate(sprintf('No %s found.', $this->translate('items'))); ?></span>
+    <?php endif; ?>
+</div>
+
+<div class="confirm-panel">
+    <button type="button" class="select-resources-button">Add selected</button>
+</div>

@@ -1,0 +1,33 @@
+<?php
+$translate = $this->plugin('translate');
+$escape = $this->plugin('escapeHtml');
+$this->htmlElement('body')->appendAttribute('class', 'locations show');
+?>
+<?php echo $this->pageTitle($item->local(), 1, $translate('Locations')); ?>
+<div id="page-actions">
+    <?php echo $item->link($translate('Edit item'), 'edit', ['class' => 'button']); ?>
+</div>
+
+<div id="item-metadata" class="active section">
+        <div class="meta-group">
+            <h4><?php echo $translate('Location URI'); ?></h4>
+            <div class="value"><?php echo $escape($item->uri()); ?></div>
+        </div>
+         <div class="meta-group">
+            <h4><?php echo $translate('Location Title'); ?></h4>
+            <div class="value"><?php echo $escape($translate($item->local())); ?></div>
+        </div> 
+        <div class="meta-group">
+            <h4><?php echo $translate('Location Position'); ?></h4>
+            <div class="value"><?php echo $escape($translate($item->position())); ?></div>
+        </div>
+</div>
+
+<p><img id="img" src="https://fenix.tecnico.ulisboa.pt/api/fenix/v1/spaces/<?php echo $item->uri(); ?>/blueprint?format=jpeg" alt="<?php $item->local(); ?>" height="450" width="600"></p>
+
+<div id="item-linked" class="section">
+    <?php
+    $page = $this->params()->fromQuery('page', 1);
+    ?>
+</div>
+<?php $this->trigger('view.show.after'); ?>

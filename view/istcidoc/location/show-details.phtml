@@ -1,0 +1,14 @@
+<?php
+$escape = $this->plugin('escapeHtml');
+ ?>
+<div class="resource-details" data-resource-values="<?php echo $escape($values); ?>">
+    <h3 class="o-title"><?php echo $resource->link($resource->local()); ?></h3>
+    <div class="o-description">
+        <ul>
+    		<li><?php echo 'Location Uri: ' . $escape($resource->uri()); ?></li>
+    		<li><?php echo 'Location Title: ' . $escape($resource->local()); ?></li>
+    		<li><?php echo 'Location Position: ' . $escape($resource->position()); ?></li>
+        </ul>
+	</div>
+    <?php $this->trigger('view.details', array('entity' => $resource)); ?>
+</div>

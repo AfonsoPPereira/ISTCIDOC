@@ -1,0 +1,64 @@
+<?php 
+$this->headLink()->appendStylesheet($this->assetUrl('css/add-location.css', 'ISTCIDOC'));
+
+require_once(__DIR__ . "/fenixedu-sdk/FenixEdu.class.php");
+
+$fenixEduClient = FenixEdu::getSingleton();
+
+if(isset($_GET['id']) and is_numeric($_GET['id']) and $_GET['id'] != 2448131360898 and $_GET['id'] != 2448131392438) {
+	$spaceID = $_GET['id'];
+} else{
+	$spaceID = 2448131360897; // Campus Alameda
+}
+
+$spaces_array = $fenixEduClient->getSpace($spaceID);
+
+if (isset($spaces_array->topLevelSpace) and $spaces_array->topLevelSpace->id != 2448131360897){
+	$spaceID = 2448131360897;
+	$spaces_array = $fenixEduClient->getSpace($spaceID); 
+}
+
+$localName = $spaces_array->name;
+
+echo 'Current Location: <b>' . $localName . '</b>';
+
+echo '<p><div class="img-magnifier-container"><img id="img" alt="' . $localName . '" height="250" width="350"></div></p>';
+
+if (isset($spaces_array->parentSpace)){
+	echo '&nbsp;&nbsp;&nbsp;<button type="button" onClick="window.location = \'add-location?id=' . $spaces_array->parentSpace->id . '\';">Go Back to Parent Location</button>';
+}
+
+$form->prepare(); 
+echo '<p>Set Location: <select>';
+
+if (isset($spaces_array->containedSpaces)){ 
+	foreach ($spaces_array->containedSpaces as $val){
+		echo '<option value="' . $val->id . '" onClick="window.location = \'add-location?id=' . $val->id . '\';">' . $val->name . '</option>';
+	}
+}
+
+echo '</select></p>';
+
+?>
+<?php echo $this->pageTitle($this->translate('Add Location')); ?>
+<?php $this->headScript()->appendFile($this->assetUrl('js/add-location.js', 'ISTCIDOC')); ?>
+<?php echo $this->form()->openTag($form); ?>
+<div id="page-actions">
+    <button><?php echo $this->escapeHtml($this->translate('Submit')); ?></button>
+	
+</div>
+<?php echo $this->formCollection($form, false); ?>
+<?php echo $this->form()->closeTag(); ?>
+<script>
+	document.getElementById("uri").value = "<?php echo $spaceID ?>";
+	document.getElementById("local").value = "<?php echo $localName ?>";
+
+	if (document.getElementById("local").value == ''){
+		document.getElementById("local").readOnly = false;
+	}
+
+	var format = 'jpeg';
+    var roomURL = 'https://fenix.tecnico.ulisboa.pt/api/fenix/v1/spaces/' + <?php echo $spaceID ?> + '/blueprint?format=' + format;
+    document.getElementById("img").src = roomURL;
+    magnify("img", 3);
+</script>
