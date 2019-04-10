@@ -1,4 +1,0 @@
-1) Acabar a parte do resource-values.phtml e AbstractResourceEntityRepresentation.php, para pôr a Location resource a funcionar
-2) Pôr a API do Fenix e integrar
-3) Search a funcionar corretamente a página das Localizações
-4) EasyRDF usar para pôr as classes e propriedades certas, em vez de ser à mão.
