@@ -11,6 +11,10 @@ use Doctrine\ORM\EntityManager;
 use Omeka\Entity\ResourceClass;
 use Omeka\Entity\Property;
 use Omeka\Entity\Vocabulary;
+use Zend\View\Renderer\PhpRenderer;
+use Zend\Mvc\Controller\AbstractController;
+
+use ISTCIDOC\Form\ConfigForm;
 
 
 class Module extends AbstractModule
@@ -158,65 +162,74 @@ class Module extends AbstractModule
 	public function install(ServiceLocatorInterface $serviceLocator)
     {
         $api = $serviceLocator->get('Omeka\ApiManager');
-		$ontology = Array
-        (
-            "o:namespace_uri" => "http://localhost:90/omeka-s/ns/istcidoc",
-            "o:prefix" => "istcidoc",
-            "o:label" => "IST CIDOC",
-			"o:vocabulary" => "istcidoc",
-            "o:comment" => "",
-            "o:class" => Array
-                (
-                ),
-            "o:property" => Array
-                (
-                )
-
-        );
-		
-        include 'files/classes_array.php';
-
-		$resource_classes = $class_array;
-
-        include 'files/properties_array.php';
-		
-		$properties = $properties_array;
-		
-		$result = $api->create('vocabularies', $ontology);
-		$vocabulary = $api->read('vocabularies',
-                ['prefix' => 'istcidoc'],
-                [],
-                ['responseContent' => 'resource']
-            )->getContent();
+		$search = $api->search('vocabularies',
+			['prefix' => 'istcidoc'],
+			[],
+			['responseContent' => 'resource'])->getContent();
 			
-        $this->ontology = $vocabulary;
+		if (!isset($search[0])){
+			$ontology = Array
+			(
+				"o:namespace_uri" => __DIR__,
+				"o:prefix" => "istcidoc",
+				"o:label" => "IST CIDOC",
+				"o:vocabulary" => "istcidoc",
+				"o:comment" => "",
+				"o:class" => Array
+					(
+					),
+				"o:property" => Array
+					(
+					)
+			);
+			
+			$result = $api->create('vocabularies', $ontology);
+			
+			$vocabulary = $api->read('vocabularies',
+				['prefix' => 'istcidoc'],
+				[],
+				['responseContent' => 'resource']
+			)->getContent();
+			
+			$this->ontology = $vocabulary;
+
+			require 'requires.php';
+			include 'files/classes_array.php';
+			include 'files/properties_array.php';
+			
+			$resultResourceClasses = $this->saveResourceClasses($class_array, $serviceLocator);
+			$resultProperties = $this->saveProperties($properties_array, $serviceLocator);
+
+			$this->entityManager->flush();
+		}
 		
-		$resultResourceClasses = $this->saveResourceClasses($resource_classes, $serviceLocator);
-        $resultProperties = $this->saveProperties($properties, $serviceLocator);
-
-        $this->entityManager->flush();
-
         $conn = $serviceLocator->get('Omeka\Connection');
-        $conn->exec('CREATE TABLE location (id INT AUTO_INCREMENT NOT NULL, uri BIGINT DEFAULT NULL, `local` VARCHAR(190) NOT NULL, `position` VARCHAR(190) NOT NULL, UNIQUE INDEX UNIQ_8533D2A5EA750E8 (uri, local, position), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB;');
+        $conn->exec('CREATE TABLE IF NOT EXISTS location (id INT AUTO_INCREMENT NOT NULL, uri BIGINT DEFAULT NULL, `local` VARCHAR(190) NOT NULL, `position` VARCHAR(190) NOT NULL, UNIQUE INDEX UNIQ_8533D2A5EA750E8 (uri, local, position), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB;');
     }
 	
 	public function uninstall(ServiceLocatorInterface $serviceLocator)
     {
-		$api = $serviceLocator->get('Omeka\ApiManager');
-		$vocabulary = $api->search('vocabularies',
-                ['prefix' => 'istcidoc'],
-                [],
-                ['responseContent' => 'resource']
-            )->getContent();
+		$settings = $this->getServiceLocator()->get('Omeka\Settings');
 		
-		if (!$vocabulary) return false;	
+		if ($settings->get('istcidoc_delete_vocabulary') == 'yes'){
+			$api = $serviceLocator->get('Omeka\ApiManager');
+			$vocabulary = $api->search('vocabularies',
+					['prefix' => 'istcidoc'],
+					[],
+					['responseContent' => 'resource']
+				)->getContent();
+			
+			if (!$vocabulary) return false;	
+			
+			$vocabID = $vocabulary[0]->id();
+			
+			$api->delete('vocabularies', $vocabID);
+		}
 		
-		$vocabID = $vocabulary[0]->id();
-		
-		$api->delete('vocabularies', $vocabID);
-
-        $conn = $serviceLocator->get('Omeka\Connection');
-        $conn->exec('DROP TABLE location');
+		if ($settings->get('istcidoc_delete_locations') == 'yes'){
+			$conn = $serviceLocator->get('Omeka\Connection');
+			$conn->exec('DROP TABLE IF EXISTS location');
+		}
 	}
 
     public function attachListeners(SharedEventManagerInterface $sharedEventManager)
@@ -240,5 +253,35 @@ class Module extends AbstractModule
             $names[] = 'location:' . $location->id();
         }
         $event->setParam('registered_names', $names);
+    }
+	
+	public function getConfigForm(PhpRenderer $renderer)
+    {
+        $settings = $this->getServiceLocator()->get('Omeka\Settings');
+        $form = new ConfigForm;
+        $form->init();
+        $form->setData([
+            'delete_vocabulary' => $settings->get('istcidoc_delete_vocabulary', 'no'),
+            'delete_locations' => $settings->get('istcidoc_delete_locations', 'no'),
+        ]);
+		
+        return $renderer->formCollection($form, false);
+    }
+	
+	public function handleConfigForm(AbstractController $controller)
+    {
+        $settings = $this->getServiceLocator()->get('Omeka\Settings');
+        $form = new ConfigForm;
+        $form->init();
+        $form->setData($controller->params()->fromPost());
+        if (!$form->isValid()) {
+            $controller->messenger()->addErrors($form->getMessages());
+            return false;
+        }
+        $formData = $form->getData();
+        $settings->set('istcidoc_delete_vocabulary', $formData['delete_vocabulary']);
+        $settings->set('istcidoc_delete_locations', $formData['delete_locations']);
+		
+        return true;
     }
 }

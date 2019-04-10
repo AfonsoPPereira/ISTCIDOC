@@ -1,37 +1,26 @@
 <?php
-    /* Desenvolver as classes do cidoc mais tarde  */
-
-    include_once 'requires.php';
-    //require 'vendor/autoload.php';
-
     $fileName = FILENAME_RDF;
     $classes = CLASSES;
-    $ontology = "istcidoc";
+    $ontology = ONTOLOGY;
 
-    $cidoc = createRDFGraph();
+    $cidoc = new EasyRdf_graph();
     $cidoc->parseFile(__DIR__ . "/" . $fileName);
     $cidoc_resources = $cidoc->resources(); 
-    //print_r($cidoc_resources->all());  
 
-    $class_array = Array();  
-    $i = 0;
+    $class_array = Array();
 
     foreach ($cidoc_resources as $key => $val) {
-        if ($val->type() == $class){
-
+        if ($val->type() == $classes){
             $class = str_replace('_', ' ', $val->localName());
-            $class_array[$i] = Array
+            
+            array_push($class_array, Array
             (
                 "o:label" => $class,
                 "o:comment" => $class,
-                "o:local_name" => $class,
+                "o:local_name" => strtolower($class),
                 "o:vocabulary" => $ontology,
-                "term" => $ontology . ":". $class,
-            );
+                "term" => $ontology . ":". strtolower($class),
+            ));
         }
-
-        $i += 1;
     }
-
-    print_r($class_array); exit();
 ?>

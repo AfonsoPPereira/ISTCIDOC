@@ -12,6 +12,8 @@ define("SCOPENOTE", "skos:scopeNote");
 define("RANGE", "rdfs:range");
 define("DOMAIN", "rdfs:domain");
 define("ABOUT", "rdf:about");
+define("COMMENT", "rdfs:comment");
+define("VALUE", "value:protected");
 
 /* Classes Define */
 define("CLASSES", "owl:Class");
@@ -23,11 +25,5 @@ define("SUBPROPERTYOF", "rdfs:subPropertyOf");
 
 /* Ontology Name */
 define("ONTOLOGY", "istcidoc");
-
-if (!function_exists('createRDFGraph'))   {
-	function createRDFGraph(){
-		return new EasyRdf_graph();
-	}
-}
 
 ?>

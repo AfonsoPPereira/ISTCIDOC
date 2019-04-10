@@ -23,7 +23,6 @@ class ISTCIDOCFormLocation extends Form
             'attributes' => array(
                 'readonly' => TRUE,
                 'id' => 'uri',
-                'disabled' => TRUE,
             ),
             'options' => [
                 'label' => 'Location URI', // @translate
@@ -37,7 +36,6 @@ class ISTCIDOCFormLocation extends Form
             'attributes' => array(
                 'readonly' => TRUE,
                 'id' => 'local',
-                'disabled' => TRUE,
             ),
             'options' => [
                 'label' => 'Location Title', // @translate
