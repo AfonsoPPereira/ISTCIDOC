@@ -119,30 +119,43 @@ class LocationAdapter extends AbstractEntityAdapter
             }
 
             $valuesAlias = $this->createAlias();
-            $positive = true;
 
             switch ($queryType) {
                 case 'neq':
-                    $positive = false;
+                    $predicateExpr = $qb->expr()->neq(
+                        $propertyName != '' ? $this->getEntityClass() . '.' . $propertyName : $this->getEntityClass(),
+                        $this->createNamedParameter($qb, $value)
+                    );
+                    break;
                 case 'eq':
-                    $param = $this->createNamedParameter($qb, $value);
                     $predicateExpr = $qb->expr()->eq(
-                        $this->getEntityClass() . '.' . $propertyName,
-                        $param
+                        $propertyName != '' ? $this->getEntityClass() . '.' . $propertyName : $this->getEntityClass(),
+                        $this->createNamedParameter($qb, $value)
                     );
                     break;
                 case 'nin':
-                    $positive = false;
-                case 'in':
-                    $predicateExpr = $qb->expr()->like(
+                    $predicateExpr = $qb->expr()->notlike(
                         $this->getEntityClass() . '.' . $propertyName,
                         $this->createNamedParameter($qb, '%' . $value . '%')
                     );
                     break;
-                case 'nex':
-                    $positive = false;
-                case 'ex':
-                    $predicateExpr = $qb->expr()->isNotNull("$valuesAlias.id");
+                case 'in':
+                    $predicateExpr = $qb->expr()->like(
+                        $this->getEntityClass() . '.' . $propertyName,
+                        $this->createNamedParameter($qb, '%'. $value . '%')
+                    );
+                    break;
+                case 'nres':
+                    $predicateExpr = $qb->expr()->neq(
+                        $this->getEntityClass() . '.id',
+                        $this->createNamedParameter($qb, $value)
+                    );
+                    break;
+                case 'res':
+                    $predicateExpr = $qb->expr()->eq(
+                        $this->getEntityClass() . '.id',
+                        $this->createNamedParameter($qb, $value)
+                    );
                     break;
                 default:
                     continue 2;
@@ -150,12 +163,7 @@ class LocationAdapter extends AbstractEntityAdapter
 
             $joinConditions = [];
 
-            if ($positive) {
-                $whereClause = '(' . $predicateExpr . ')';
-            } else {
-                $joinConditions[] = $predicateExpr;
-                $whereClause = $qb->expr()->isNull("$valuesAlias.id");
-            }
+            $whereClause = '(' . $predicateExpr . ')';
 
             /*if ($joinConditions) {
                 $qb->leftJoin($valuesJoin, $valuesAlias, 'WITH', $qb->expr()->andX(...$joinConditions));
