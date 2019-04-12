@@ -134,16 +134,54 @@ class LocationAdapter extends AbstractEntityAdapter
                     );
                     break;
                 case 'nin':
-                    $predicateExpr = $qb->expr()->notlike(
-                        $this->getEntityClass() . '.' . $propertyName,
-                        $this->createNamedParameter($qb, '%' . $value . '%')
-                    );
+                    if ($propertyName == ''){
+                        $predicateExpr = '(' . $qb->expr()->notlike(
+                            $this->getEntityClass() . '.id',
+                            $this->createNamedParameter($qb, '%'. $value . '%')
+                            ) . ') AND (' . 
+                                $qb->expr()->notlike(
+                                $this->getEntityClass() . '.uri',
+                                $this->createNamedParameter($qb, '%'. $value . '%')
+                        ) . ') AND (' . 
+                                $qb->expr()->notlike(
+                                $this->getEntityClass() . '.local',
+                                $this->createNamedParameter($qb, '%'. $value . '%')
+                        ) . ') AND (' . 
+                                $qb->expr()->notlike(
+                                $this->getEntityClass() . '.position',
+                                $this->createNamedParameter($qb, '%'. $value . '%')
+                        ) . ')';
+                    }else{
+                       $predicateExpr = $qb->expr()->notlike(
+                            $this->getEntityClass() . '.' . $propertyName,
+                            $this->createNamedParameter($qb, '%'. $value . '%')
+                        ); 
+                    }
                     break;
                 case 'in':
-                    $predicateExpr = $qb->expr()->like(
-                        $this->getEntityClass() . '.' . $propertyName,
-                        $this->createNamedParameter($qb, '%'. $value . '%')
-                    );
+                    if ($propertyName == ''){
+                        $predicateExpr = '(' . $qb->expr()->like(
+                            $this->getEntityClass() . '.id',
+                            $this->createNamedParameter($qb, '%'. $value . '%')
+                            ) . ') OR (' . 
+                                $qb->expr()->like(
+                                $this->getEntityClass() . '.uri',
+                                $this->createNamedParameter($qb, '%'. $value . '%')
+                        ) . ') OR (' . 
+                                $qb->expr()->like(
+                                $this->getEntityClass() . '.local',
+                                $this->createNamedParameter($qb, '%'. $value . '%')
+                        ) . ') OR (' . 
+                                $qb->expr()->like(
+                                $this->getEntityClass() . '.position',
+                                $this->createNamedParameter($qb, '%'. $value . '%')
+                        ) . ')';
+                    }else{
+                       $predicateExpr = $qb->expr()->like(
+                            $this->getEntityClass() . '.' . $propertyName,
+                            $this->createNamedParameter($qb, '%'. $value . '%')
+                        ); 
+                    }
                     break;
                 case 'nres':
                     $predicateExpr = $qb->expr()->neq(
