@@ -128,7 +128,7 @@ class IndexController extends AbstractActionController
             ));
             return false;
         }
-
+        
         $result = $this->api()->create('istcidoc_items', $data);
         //$result = true;
         if (!$result){

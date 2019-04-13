@@ -49,6 +49,10 @@ return [
         ],
     ],
     'controllers' => [
+        'invokables' => [
+            'ISTCIDOC\Controller\Site\Item' => ISTCIDOC\Controller\Site\ItemController::class,
+            'Omeka\Controller\Site\Location' => ISTCIDOC\Controller\Site\LocationController::class,
+        ],
         'factories' => [
             'ISTCIDOC\Controller\Index' => 'ISTCIDOC\Service\Controller\IndexControllerFactory',
             'ISTCIDOC\Controller\Location' => 'ISTCIDOC\Service\Controller\LocationControllerFactory',
@@ -56,12 +60,45 @@ return [
     ],
     'api_adapters' => [
         'invokables' => [
+            'Omeka\Api\Adapter\ItemAdapter' => 'ISTCIDOC\Api\Adapter\NewItemAdapter',
             'istcidoc_items' => 'ISTCIDOC\Api\Adapter\ISTCIDOCItemAdapter',
             'locations' => 'ISTCIDOC\Api\Adapter\LocationAdapter',
         ],
     ],
     'router' => [
         'routes' => [
+            'site' => [
+                'type' => \Zend\Router\Http\Segment::class,
+                'options' => [
+                    'route' => '/s/:site-slug',
+                    'constraints' => [
+                        'site-slug' => '[a-zA-Z0-9_-]+',
+                    ],
+                    'defaults' => [
+                        '__NAMESPACE__' => 'Omeka\Controller\Site',
+                        '__SITE__' => true,
+                        'controller' => 'Index',
+                        'action' => 'index',
+                    ],
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'resource' => [
+                        'type' => \Zend\Router\Http\Segment::class,
+                        'options' => [
+                            'route' => '/:controller[/:action]',
+                            'defaults' => [
+                                '__NAMESPACE__' => 'ISTCIDOC\Controller\Site',
+                                'action' => 'browse',
+                            ],
+                            'constraints' => [
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
             'admin' => [
                 'child_routes' => [
                     'ist-cidoc' => [
