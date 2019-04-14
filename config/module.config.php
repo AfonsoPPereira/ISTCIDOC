@@ -51,11 +51,17 @@ return [
     'controllers' => [
         'invokables' => [
             'ISTCIDOC\Controller\Site\Item' => ISTCIDOC\Controller\Site\ItemController::class,
-            'Omeka\Controller\Site\Location' => ISTCIDOC\Controller\Site\LocationController::class,
+            'ISTCIDOC\Controller\Site\Location' => ISTCIDOC\Controller\Site\LocationController::class,
+            'ISTCIDOC\Controller\Site\Index' => ISTCIDOC\Controller\Site\IndexController::class,
+            'ISTCIDOC\Controller\Site\ItemSet' => ISTCIDOC\Controller\Site\ItemSetController::class,
+            'ISTCIDOC\Controller\Site\Media' => ISTCIDOC\Controller\Site\MediaController::class,
+            'ISTCIDOC\Controller\Site\Page' => ISTCIDOC\Controller\Site\PageController::class,
         ],
         'factories' => [
             'ISTCIDOC\Controller\Index' => 'ISTCIDOC\Service\Controller\IndexControllerFactory',
             'ISTCIDOC\Controller\Location' => 'ISTCIDOC\Service\Controller\LocationControllerFactory',
+            'ISTCIDOC\Controller\Site\ItemController' => 'ISTCIDOC\Service\Controller\Site\ItemControllerFactory',
+            'ISTCIDOC\Controller\Site\LocationController' => 'ISTCIDOC\Service\Controller\Site\LocationControllerFactory',
         ],
     ],
     'api_adapters' => [
@@ -75,7 +81,7 @@ return [
                         'site-slug' => '[a-zA-Z0-9_-]+',
                     ],
                     'defaults' => [
-                        '__NAMESPACE__' => 'Omeka\Controller\Site',
+                        '__NAMESPACE__' => 'ISTCIDOC\Controller\Site',
                         '__SITE__' => true,
                         'controller' => 'Index',
                         'action' => 'index',
@@ -89,6 +95,7 @@ return [
                             'route' => '/:controller[/:action]',
                             'defaults' => [
                                 '__NAMESPACE__' => 'ISTCIDOC\Controller\Site',
+                                'controller' => 'Item',
                                 'action' => 'browse',
                             ],
                             'constraints' => [
