@@ -35,7 +35,7 @@ $labelInfo = $this->setting('property_label_information');
             ?>
             <div class="<?php echo implode(' ', $class); ?>" lang="<?php echo $escape($value->lang()); ?>">
                 <?php if ($propertyData['property']->term() == 'istcidoc:location') { ?>
-                   <?php echo "<a class='resource-link' href='../location/" . $value->asHtml() . "'><span class='resource-name'>" . $value->lang() . "</span></a>"; ?>
+                   <?php echo "<a style='color: blue' title=" . $value->lang() ." class='resource-link' href='../location/" . $value->asHtml() . "'><span class='resource-name'>" . $value->lang() . "</span></a>"; ?>
                 <?php } else{ echo $value->asHtml(); } ?>
             </div>
         <?php endforeach; ?>
