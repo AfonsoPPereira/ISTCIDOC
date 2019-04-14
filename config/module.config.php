@@ -60,8 +60,6 @@ return [
         'factories' => [
             'ISTCIDOC\Controller\Index' => 'ISTCIDOC\Service\Controller\IndexControllerFactory',
             'ISTCIDOC\Controller\Location' => 'ISTCIDOC\Service\Controller\LocationControllerFactory',
-            'ISTCIDOC\Controller\Site\ItemController' => 'ISTCIDOC\Service\Controller\Site\ItemControllerFactory',
-            'ISTCIDOC\Controller\Site\LocationController' => 'ISTCIDOC\Service\Controller\Site\LocationControllerFactory',
         ],
     ],
     'api_adapters' => [
@@ -81,7 +79,7 @@ return [
                         'site-slug' => '[a-zA-Z0-9_-]+',
                     ],
                     'defaults' => [
-                        '__NAMESPACE__' => 'ISTCIDOC\Controller\Site',
+                        '__NAMESPACE__' => 'Omeka\Controller\Site',
                         '__SITE__' => true,
                         'controller' => 'Index',
                         'action' => 'index',
@@ -94,13 +92,69 @@ return [
                         'options' => [
                             'route' => '/:controller[/:action]',
                             'defaults' => [
-                                '__NAMESPACE__' => 'ISTCIDOC\Controller\Site',
-                                'controller' => 'Item',
                                 'action' => 'browse',
                             ],
                             'constraints' => [
                                 'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ],
+                        ],
+                    ],
+                    'resource-id' => [
+                        'type' => \Zend\Router\Http\Segment::class,
+                        'options' => [
+                            'route' => '/:controller/:id[/:action]',
+                            'defaults' => [
+                                'action' => 'show',
+                            ],
+                            'constraints' => [
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id' => '\d+',
+                            ],
+                        ],
+                    ],
+                    'item' => [
+                        'type' => \Zend\Router\Http\Segment::class,
+                        'options' => [
+                            'route' => '/item[/:action]',
+                            'defaults' => [
+                                '__NAMESPACE__' => 'ISTCIDOC\Controller\Site',
+                                'controller' => 'Item',
+                                'action' => 'browse',
+                            ],
+                            'constraints' => [
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ],
+                        ],
+                    ],
+                    'item-id' => [
+                        'type' => \Zend\Router\Http\Segment::class,
+                        'options' => [
+                            'route' => '/item/:id[/:action]',
+                            'defaults' => [
+                                '__NAMESPACE__' => 'ISTCIDOC\Controller\Site',
+                                'controller' => 'Item',
+                                'action' => 'show',
+                            ],
+                            'constraints' => [
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id' => '\d+',
+                            ],
+                        ],
+                    ],
+                    'location-id' => [
+                        'type' => \Zend\Router\Http\Segment::class,
+                        'options' => [
+                            'route' => '/location/:id[/:action]',
+                            'defaults' => [
+                                '__NAMESPACE__' => 'ISTCIDOC\Controller\Site',
+                                'controller' => 'Location',
+                                'action' => 'show',
+                            ],
+                            'constraints' => [
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id' => '\d+',
                             ],
                         ],
                     ],
