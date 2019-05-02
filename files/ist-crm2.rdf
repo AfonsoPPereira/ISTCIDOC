@@ -1,0 +1,159 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#"
+     xml:base="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm"/>
+    
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+    
+    <!-- http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Description -->
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Description">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:comment>Object Description</rdfs:comment>
+    </owl:ObjectProperty>
+    
+    <!-- http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Identifier -->
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Identifier">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:comment>Object Identifier</rdfs:comment>
+    </owl:ObjectProperty>
+    
+    <!-- http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Location -->
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Location">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:comment>Object location</rdfs:comment>
+    </owl:ObjectProperty>
+    
+    <!-- http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Title -->
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Title">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:comment>Title/Name</rdfs:comment>
+    </owl:ObjectProperty>
+    
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+    
+    <!-- http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Accessory -->
+    <owl:Class rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Accessory">
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Architectural_Sculpture"/>
+    </owl:Class>
+    
+    <!-- http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Architectural_Sculpture -->
+    <owl:Class rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Architectural_Sculpture"/>
+    
+    <!-- http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Big_Sculpture -->
+    <owl:Class rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Big_Sculpture"/>
+    
+    <!-- http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Computer -->
+    <owl:Class rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Computer"/>
+    
+    <!-- http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Demonstration_Instrument -->
+    <owl:Class rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Demonstration_Instrument"/>
+    
+    <!-- http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Drawing -->
+    <owl:Class rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Drawing"/>
+    
+    <!-- http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Funerary_Sculpture -->
+    <owl:Class rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Funerary_Sculpture"/>
+    
+    <!-- http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Furniture -->
+    <owl:Class rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Furniture"/>
+    
+    <!-- http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Mockup -->
+    <owl:Class rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Mockup"/>
+    
+    <!-- http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Model -->
+    <owl:Class rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Model"/>
+    
+    <!-- http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Mural -->
+    <owl:Class rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Mural"/>
+    
+    <!-- http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Oil -->
+    <owl:Class rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Oil"/>
+    
+    <!-- http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Painting -->
+    <owl:Class rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Painting"/>
+    
+    <!-- http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Pastel -->
+    <owl:Class rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Pastel"/>
+    
+    <!-- http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Pedagogical_Model -->
+    <owl:Class rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Pedagogical_Model"/>
+    
+    <!-- http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Sample -->
+    <owl:Class rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Sample"/>
+    
+    <!-- http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Sculpture -->
+    <owl:Class rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Sculpture"/>
+    
+    <!-- http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Stained_Glass -->
+    <owl:Class rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Stained_Glass"/>
+    
+    <!-- http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Temper -->
+    <owl:Class rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Temper"/>
+    
+    <!-- http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Tool -->
+    <owl:Class rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Tool"/>
+    
+    <!-- http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Watercolor -->
+    <owl:Class rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Watercolor"/>
+    
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // General axioms
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Accessory"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Architectural_Sculpture"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Big_Sculpture"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Computer"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Accessory"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Architectural_Sculpture"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Big_Sculpture"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Computer"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Demonstration_Instrument"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Drawing"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Funerary_Sculpture"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Furniture"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Mockup"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Model"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Mural"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Oil"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Painting"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Pastel"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Pedagogical_Model"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Sample"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Sculpture"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Stained_Glass"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Temper"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Tool"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/miguelafonso/ontologies/2019/0/ist-crm#Watercolor"/>
+        </owl:members>
+    </rdf:Description>
+</rdf:RDF>
+<!-- Generated by the OWL API (version 4.2.8.20170104-2310) https://github.com/owlcs/owlapi -->

@@ -32,6 +32,11 @@ class ISTCIDOCItemRepresentation extends ItemRepresentation
         return $default;
     }
 
+    public function getControllerName()
+    {
+        return 'istcidoc_items';
+    }
+
     public function displayValues(array $options = [])
     {
         if (!isset($options['viewName'])) {
@@ -72,4 +77,39 @@ class ISTCIDOCItemRepresentation extends ItemRepresentation
             'default' => $default,
         ]);
     }
+
+    public function displayLocation($default = null)
+    {
+        return (string) $this->value('istcidoc:location', [
+            'default' => $default,
+        ]);
+
+    }
+
+    public function displayIdentifier($default = null)
+    {
+        return (string) $this->value('istcidoc:identifier', [
+            'default' => $default,
+        ]);
+
+    }
+
+    public function displayClass($default = null)
+    {
+        $resourceClass = $this->resourceClass();
+        return $resourceClass ? $resourceClass->term() : $default;
+    }
+
+    
+    public function displayResourceClassTerm($default = null)
+    {
+        $resourceClass = $this->resourceClass();
+        return $resourceClass ? $resourceClass->vocabulary()->prefix() : $default;
+    }
+
+    public function isISTCIDOCItem($default = null)
+    {
+        return $this->displayResourceClassTerm() == 'istcidoc';
+    }
+
 }

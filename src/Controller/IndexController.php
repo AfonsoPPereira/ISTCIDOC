@@ -26,6 +26,7 @@ class IndexController extends AbstractActionController
 
         $data = array();
         $flag = 0;
+        $flag2 = 0;
 
         foreach ($item as $key => $value){
             if ($key == 'o:resource_class'){
@@ -53,7 +54,7 @@ class IndexController extends AbstractActionController
                     $data[$key][0]["type"] = "literal";
                     $data[$key][0]["property_id"] = $property_id;
                     $data[$key][0]["@value"] = $val;
-                    $flag = 1;
+                    $flag2 = 1;
                 }elseif ($item[$key]['type'][0] == 'resource' or $item[$key]['type'][0] == 'resource_cidoc'){
                     if (trim($value['value'][0]) == '')
                         continue;
@@ -65,8 +66,7 @@ class IndexController extends AbstractActionController
                         $data[$key][$key2]["@value"] = trim($value2);
                         $data[$key][$key2]["@language"] = $locationSel[0]->local();
                     }
-
-                    $flag = 1;
+                    $flag2 = 1;
                 }elseif ($item[$key]['type'][0] == 'uri'){
                     $val = trim($value['value'][0]);
                     $val2 = trim($value['value'][1]);
@@ -77,7 +77,7 @@ class IndexController extends AbstractActionController
                     $data[$key][0]["property_id"] = $property_id;
                     $data[$key][0]["@id"] = $val;
                     $data[$key][0]["o:label"] = $val2;
-                    $flag = 1;
+                    $flag2 = 1;
                 }elseif ($item[$key]['type'][0] == 'location'){
                     exit();
                     $val = trim($value['value'][0]);
@@ -93,7 +93,7 @@ class IndexController extends AbstractActionController
                     $class_id = $search[0]->id();
 
                     $data["o:resource_class"]["o:id"] = $class_id;
-                    $flag = 1;
+                    $flag2 = 1;
 
                     $search = $this->api()->search('properties', array('term' => 'istcidoc:location_uri'))->getContent();
 
@@ -122,9 +122,9 @@ class IndexController extends AbstractActionController
             }
         }
 
-        if (!$flag){
+        if (!$flag or !$flag2){
             $this->messenger()->addError(new Message(
-                'At least one item field and/or class needs to be filled.' // @translate
+                'At least one item field and a class needs to be filled.' // @translate
             ));
             return false;
         }
