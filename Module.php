@@ -193,7 +193,7 @@ class Module extends AbstractModule
 			
 			$this->ontology = $vocabulary;
 
-			require 'requires.php';
+			require 'files/requires.php';
 			include 'files/classes_array.php';
 			include 'files/properties_array.php';
 			
